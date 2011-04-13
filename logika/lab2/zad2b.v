@@ -81,6 +81,17 @@ Qed.
 
 Lemma right_cancel : forall (x y a: G), (m x a) = (m y a) -> (x = y).
 
+Proof.
+intros.
+apply (right_mul_eq (i a)) in H.
+rewrite <- assoc in H.
+rewrite <- assoc in H.
+rewrite right_i in H.
+rewrite right_e in H.
+rewrite right_e in H.
+assumption.
+Qed.
+
 (* Your assignment, doable in 8 single-tactic lines *)
 
 
