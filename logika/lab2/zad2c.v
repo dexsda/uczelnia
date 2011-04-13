@@ -27,6 +27,12 @@ apply (H y).
 Qed.
 
 Proposition unique_smallest : forall (x y : E), smallest x -> smallest y -> (x=y).
+unfold smallest.
+intros.
+apply asym.
+apply (H y).
+apply (H0 x).
+Qed.
 
 (* Your assignment, doable with 5 single-tactic lines *)
 
