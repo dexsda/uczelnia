@@ -41,5 +41,11 @@ assumption.
 Qed.
 
 Lemma exists_forall : (exists y:Y,forall x:X,R x y) -> (forall x:X,exists y:Y,R x y).
+Proof.
+intros.
+destruct H.
+exists x0.
+apply (H x).
+Qed.
 
 (* Your assignmnent, doable with 5 single-tactic lines *)
