@@ -142,3 +142,7 @@ user (parent)  : 0.20s
 user (children): 0.00s
 sys  (parent)  : 2.75s
 sys  (children): 0.00s
+
+Clone sa nieznaczne szybsze od forków.
+
+Vfork jest znacznie szybszy od forka, oraz (co widać po wartosci licznika) uzywa co najmniej tych samych sektorow danych pamieci.

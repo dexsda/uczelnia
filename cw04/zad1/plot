@@ -1,0 +1,19 @@
+set terminal png
+set output "real_parent.png"
+set boxwidth 0.75 absolute
+set style fill solid 1.00 border -1
+set style histogram cluster gap 1
+set style data histograms
+set xtics 1000 nomirror
+set ytics 100 nomirror
+set mxtics 2
+set mytics 2
+set ytics 10
+set yrange [0:20]
+set ylabel "Czas"
+set xlabel "N"
+
+plot 'wykres1.txt' using 2 t "fork", '' using 3 t "vfork", '' using 4 t "clone", '' using 5:xtic(1) t "vclone"
+
+
+pause -1 "Hit any key to continue"
