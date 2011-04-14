@@ -2,10 +2,10 @@ CC = gcc
 CFLAGS = -Wall -O2
 .phony: clean
 
-all: zad2
+all: monfile
 
-zad2: zad2.c
+monfile: zad2.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 clean:
-	rm zad2 ___backup
+	rm monfile ___backup
