@@ -30,6 +30,7 @@ void integrate_mine(double expected, double abserror)
 {
 	double result;
 	int intervals;
+	printf("Wlasna metoda prostokatow (blad %g): \n",abserror);
 	result = square_integrate(f,0,2,expected,abserror,&intervals);
 	printf ("result          = % .18f\n", result);
 	printf ("exact result    = % .18f\n", expected);
@@ -37,14 +38,54 @@ void integrate_mine(double expected, double abserror)
 	printf ("intervals       =  %d\n", intervals);
 }
 
+void integrate_gsl_qags(double expected, double abserror)
+{
+	gsl_integration_workspace * w = gsl_integration_workspace_alloc (1000);
+	double result, error;
+	double alpha = 1.0;
+	gsl_function F;
+	printf("QAGS GSL (blad %g): \n",abserror);
+	F.function = &f;
+	F.params = &alpha;
+	gsl_integration_qags (&F, 0, 2, abserror, abserror, 1000, w, &result, &error); 
+	printf ("result          = % .18f\n", result);
+	printf ("exact result    = % .18f\n", expected);
+	printf ("estimated error = % .18f\n", error);
+	printf ("actual error    = % .18f\n", result - expected);
+	printf ("intervals       =  %d\n", w->size);
+	gsl_integration_workspace_free (w);
+}
+
+void integrate_gsl_qag(double expected, double abserror,int key)
+{
+	gsl_integration_workspace * w = gsl_integration_workspace_alloc (1000);
+	double result, error;
+	double alpha = 1.0;
+	gsl_function F;
+	printf("QAG GSL (blad %g, klucz %d): \n",abserror,key);
+	F.function = &f;
+	F.params = &alpha;
+	gsl_integration_qag (&F, 0, 2, abserror, abserror, 1000, key, w, &result, &error); 
+	printf ("result          = % .18f\n", result);
+	printf ("exact result    = % .18f\n", expected);
+	printf ("estimated error = % .18f\n", error);
+	printf ("actual error    = % .18f\n", result - expected);
+	printf ("intervals       =  %d\n", w->size);
+	gsl_integration_workspace_free (w);
+}
+
 int main (int argc, char * argv[])
 {
 	double expected = -1.841116916640328;
 	double abserror;
+	int i;
 	if(argc<2)
 		abserror = 1e-2;
 	else
 		abserror = atof(argv[1]);
 	integrate_mine(expected, abserror);
+	integrate_gsl_qags(expected, abserror);
+	for(i=1; i<=6; i++)
+		integrate_gsl_qag(expected, abserror, i);
 	return 0;
 }
