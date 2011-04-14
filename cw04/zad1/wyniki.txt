@@ -1,0 +1,144 @@
+fork:
+n              : 16384
+licznik        : 0
+real (parent)  : 1.19s
+real (children): 1.19s
+user (parent)  : 0.01s
+user (children): 0.00s
+sys  (parent)  : 0.54s
+sys  (children): 0.00s
+vfork:
+n              : 16384
+licznik        : 16384
+real (parent)  : 0.29s
+real (children): 0.28s
+user (parent)  : 0.00s
+user (children): 0.00s
+sys  (parent)  : 0.18s
+sys  (children): 0.00s
+clone:
+n              : 16384
+licznik        : 0
+real (parent)  : 1.17s
+real (children): 1.16s
+user (parent)  : 0.00s
+user (children): 0.00s
+sys  (parent)  : 0.44s
+sys  (children): 0.00s
+clone (vfork):
+n              : 16384
+licznik        : 16384
+real (parent)  : 0.29s
+real (children): 0.26s
+user (parent)  : 0.02s
+user (children): 0.00s
+sys  (parent)  : 0.15s
+sys  (children): 0.00s
+fork:
+n              : 65536
+licznik        : 0
+real (parent)  : 4.70s
+real (children): 4.61s
+user (parent)  : 0.08s
+user (children): 0.00s
+sys  (parent)  : 1.97s
+sys  (children): 0.00s
+vfork:
+n              : 65536
+licznik        : 65536
+real (parent)  : 1.20s
+real (children): 1.15s
+user (parent)  : 0.03s
+user (children): 0.00s
+sys  (parent)  : 0.71s
+sys  (children): 0.00s
+clone:
+n              : 65536
+licznik        : 0
+real (parent)  : 4.71s
+real (children): 4.61s
+user (parent)  : 0.08s
+user (children): 0.00s
+sys  (parent)  : 1.76s
+sys  (children): 0.00s
+clone (vfork):
+n              : 65536
+licznik        : 65536
+real (parent)  : 1.16s
+real (children): 1.10s
+user (parent)  : 0.02s
+user (children): 0.00s
+sys  (parent)  : 0.71s
+sys  (children): 0.00s
+fork:
+n              : 131072
+licznik        : 0
+real (parent)  : 9.40s
+real (children): 9.35s
+user (parent)  : 0.17s
+user (children): 0.00s
+sys  (parent)  : 3.88s
+sys  (children): 0.00s
+vfork:
+n              : 131072
+licznik        : 131072
+real (parent)  : 2.39s
+real (children): 2.31s
+user (parent)  : 0.07s
+user (children): 0.00s
+sys  (parent)  : 1.42s
+sys  (children): 0.00s
+clone:
+n              : 131072
+licznik        : 0
+real (parent)  : 9.39s
+real (children): 9.34s
+user (parent)  : 0.14s
+user (children): 0.00s
+sys  (parent)  : 3.50s
+sys  (children): 0.00s
+clone (vfork):
+n              : 131072
+licznik        : 131072
+real (parent)  : 2.29s
+real (children): 2.23s
+user (parent)  : 0.07s
+user (children): 0.00s
+sys  (parent)  : 1.40s
+sys  (children): 0.00s
+fork:
+n              : 262144
+licznik        : 0
+real (parent)  : 18.82s
+real (children): 18.74s
+user (parent)  : 0.32s
+user (children): 0.00s
+sys  (parent)  : 7.80s
+sys  (children): 0.00s
+vfork:
+n              : 262144
+licznik        : 262144
+real (parent)  : 4.72s
+real (children): 4.60s
+user (parent)  : 0.17s
+user (children): 0.00s
+sys  (parent)  : 2.81s
+sys  (children): 0.00s
+clone:
+n              : 262144
+licznik        : 0
+real (parent)  : 18.73s
+real (children): 18.53s
+user (parent)  : 0.27s
+user (children): 0.00s
+sys  (parent)  : 6.96s
+sys  (children): 0.00s
+clone (vfork):
+n              : 262144
+licznik        : 262144
+real (parent)  : 4.60s
+real (children): 4.37s
+user (parent)  : 0.20s
+user (children): 0.00s
+sys  (parent)  : 2.75s
+sys  (children): 0.00s
