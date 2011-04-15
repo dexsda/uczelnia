@@ -2,17 +2,16 @@
 #include <stdlib.h>
 #include <signal.h>
 
-int b=0;
 void handler_sigsegv(int a)
 {
-	b=1;
-	psignal(a,"dzielenie przez zero!");
+	psignal(a,"Tak nie mozna zrobic!");
 }
 
 int main(int argc, char * argv[])
 {
-	signal(SIGFPE,handler_sigsegv);
-	int a=37/b;
+	signal(SIGSEGV,handler_sigsegv);
+	char * str = "Hello world";
+	*str='h';
 	printf("Doszedlem tutaj!\n");
 	return 0;
 }
