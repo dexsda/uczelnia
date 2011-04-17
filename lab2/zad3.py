@@ -20,7 +20,18 @@ def flatten3(x):
 			result.append(el)
 	return result
 
-ls = [1,[2,3],[[[]],[[4]]]]
+def rem(x):
+	while isinstance(x,list) and len(x)==1:
+		x=x[0]
+	return x
+
+flatten_filt = lambda ls:filter(lambda x:x,
+	reduce(lambda x,y:flatten_filt(x)+flatten_filt(y),
+		map(lambda x:(not isinstance(x,list) and [x]) or x,
+			map(lambda x:(isinstance(x,list) and len(x)==1 and x[0]) or x,ls))))
+
+
+ls = [1,[2,3],[[[[]],[[4]]]]]
 print flatten(ls)
 print flatten2(ls)
 print flatten3(ls)
