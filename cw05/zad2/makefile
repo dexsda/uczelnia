@@ -11,4 +11,4 @@ receiver: receiver.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 clean:
-	rm zad1
+	rm sender receiver
