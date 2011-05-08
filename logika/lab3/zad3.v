@@ -64,6 +64,11 @@ Fixpoint Mult (n1 n2 : Nat) : Nat :=
 Lemma Mult_Succ: forall n1 n2,
   Mult n1 (Succ n2) = Add n1 (Mult n1 n2).
 Proof.
+intros; induction n1; trivial.
+simpl; rewrite IHn1.
+rewrite Add_n1_Succ_n2.
+rewrite Add_Assoc.
+congruence.
 Qed.
 
 (*(* 8 punktow *)
