@@ -102,6 +102,7 @@ Qed.
 Lemma Sub_Prop2: forall n2,
   Sub Zero n2 = Zero.
 Proof.
+intros; induction n2; trivial.
 Qed.
 
 (* (* 16 punktow *)
