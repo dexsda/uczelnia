@@ -83,7 +83,7 @@ rewrite IHn1.
 congruence.
 Qed.
 
-(*(* Rekursywna definicja odejmowania -- warto sie zastanowic, czemu jest taka skomplikowana... *)
+(* Rekursywna definicja odejmowania -- warto sie zastanowic, czemu jest taka skomplikowana... *)
 Fixpoint Sub (n1 n2 : Nat) : Nat :=
   match (n1, n2) with
    | (Zero, n2') => Zero
@@ -95,17 +95,16 @@ Fixpoint Sub (n1 n2 : Nat) : Nat :=
 Lemma Sub_Prop1: forall n1, 
   Sub n1 Zero = n1.
 Proof.
-  admit.
+intros; induction n1; trivial.
 Qed.
 
 (* 2 punkty *)
 Lemma Sub_Prop2: forall n2,
   Sub Zero n2 = Zero.
 Proof.
-  admit.
 Qed.
 
-(* 16 punktow *)
+(* (* 16 punktow *)
 (* Wskazowka: Nalezy sie upewnic, ze zalozenie indukcyjne jest wlasciwie dobrane, bo inaczej dowod bedzie
  naprawde bolesny. Jeden z mozliwych sposobow to zastosowanie taktyki "revert" *)
 Lemma Sub_Prop3: forall n3 n2 n1,
