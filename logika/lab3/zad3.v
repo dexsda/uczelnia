@@ -71,14 +71,19 @@ rewrite Add_Assoc.
 congruence.
 Qed.
 
-(*(* 8 punktow *)
+(* 8 punktow *)
 Lemma Mult_Comm: forall n1 n2,
   Mult n1 n2 = Mult n2 n1.
 Proof.
-  admit.
+intros; induction n1; simpl.
+induction n2; trivial.
+simpl; rewrite <- IHn2; trivial.
+rewrite Mult_Succ; rewrite Add_Comm.
+rewrite IHn1.
+congruence.
 Qed.
 
-(* Rekursywna definicja odejmowania -- warto sie zastanowic, czemu jest taka skomplikowana... *)
+(*(* Rekursywna definicja odejmowania -- warto sie zastanowic, czemu jest taka skomplikowana... *)
 Fixpoint Sub (n1 n2 : Nat) : Nat :=
   match (n1, n2) with
    | (Zero, n2') => Zero
