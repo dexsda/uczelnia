@@ -105,24 +105,50 @@ Proof.
 intros; induction n2; trivial.
 Qed.
 
-(* (* 16 punktow *)
+(* 16 punktow *)
 (* Wskazowka: Nalezy sie upewnic, ze zalozenie indukcyjne jest wlasciwie dobrane, bo inaczej dowod bedzie
  naprawde bolesny. Jeden z mozliwych sposobow to zastosowanie taktyki "revert" *)
 Lemma Sub_Prop3: forall n3 n2 n1,
   Sub n1 n2 = n3 ->
   (n3 = Zero) \/ (Add n2 n3 = n1).
 Proof.
+  Lemma Sub_Help1: forall n1 n2,
+    Add n1 (Sub n2 n1) = n2.
+  Proof.
   admit.
+  Qed.
+intros.
+induction n1.
+left; rewrite <- H; rewrite Sub_Prop2; congruence.
+right.
+rewrite <- H.
+apply Sub_Help1.
+(*induction n2.
+right; simpl; rewrite Sub_Prop1 in H; rewrite H; congruence.*)
 Qed.
 
 (* 8 punktow *)
 (* Jesli jako zalozenie pojawi sie cos takiego jak "H: Succ n = Zero", to otrzymalismy sprzecznosc. 
  Nalezy powiadomic o tym Coq stosujac "inversion H". Mozna tez zastosowac taktyke "discriminate" *)
+
+
 Lemma Sub_Prop4: forall n1 n2 n3,
   Add n1 n2 = n3 ->
   Sub n3 n1 = n2.
 Proof.
-  admit.
-Qed.*)
+  Lemma Sub_Help: forall n1 n2,
+    Sub (Add n1 n2) n1 = n2.
+  Proof.
+  intros.
+  induction n1.
+  simpl; rewrite Sub_Prop1; congruence.
+  simpl; rewrite IHn1; congruence.
+  Qed.
+
+intros.
+induction n1.
+rewrite Sub_Prop1; rewrite Add_Comm in H; rewrite Add_n1_Zero in H; rewrite H; congruence.
+rewrite <- H; simpl; rewrite Sub_Help; congruence.
+Qed.
 
 End Induction.
