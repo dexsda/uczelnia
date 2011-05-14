@@ -112,19 +112,27 @@ Lemma Sub_Prop3: forall n3 n2 n1,
   Sub n1 n2 = n3 ->
   (n3 = Zero) \/ (Add n2 n3 = n1).
 Proof.
-  Lemma Sub_Help1: forall n1 n2,
-    Add n1 (Sub n2 n1) = n2.
-  Proof.
-  admit.
-  Qed.
-intros.
-induction n1.
-left; rewrite <- H; rewrite Sub_Prop2; congruence.
+induction n1;intros.
+simpl in H.
+subst n3.
+left;trivial.
+simpl in H.
+destruct n2.
+simpl.
 right.
-rewrite <- H.
-apply Sub_Help1.
-(*induction n2.
-right; simpl; rewrite Sub_Prop1 in H; rewrite H; congruence.*)
+symmetry.
+trivial.
+simpl.
+generalize (IHn1 n2 n3 H).
+intros.
+destruct H0.
+left;trivial.
+right.
+rewrite H0.
+trivial.
+intros.
+apply H.
+trivial.
 Qed.
 
 (* 8 punktow *)
