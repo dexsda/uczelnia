@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">
+html { height: 100% }
+body { height: 100%; margin: 0px; padding: 0px }
+#map_canvas { height: 100% }
+</style>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"> </script>
+<script type="text/javascript">
+function initialize(lat, lon, zoo) {
+var latitude=lat;
+var longitude=lon;
+var zoom=zoo;
+gcreate=function() {
+	var latlng = new google.maps.LatLng(latitude, longitude);
+	var myOptions = {
+		zoom: zoom,
+		center: latlng,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	};
+	var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
+}
+gwest=function(move) {
+	longitude=longitude-move/zoom;
+}
+geast=function(move) {
+	longitude=longitude+move/zoom;
+}
+gnorth=function(move) {
+	latitude=latitude+move/zoom;
+}
+gsouth=function(move) {
+	latitude=latitude-move/zoom;
+}
+gzoomin=function() {
+	zoom=zoom+1;
+}
+gzoomout=function() {
+	zoom=zoom-1;
+}
+return gcreate;
+}
+
+</script>
+</head>
+<body onload="init = initialize(50.04,19.59,11); init();">
+<div id="map_canvas" style="width:80%; height:80%" align="center" valign="center"></div>
+<a href="javascript:gzoomin(); init();">+</a>
+<a href="javascript:gzoomout(); init();">-</a>
+<a href="javascript:gwest(0.3); init();">&lt;</a>
+<a href="javascript:geast(0.3); init();">&gt;</a>
+<a href="javascript:gnorth(0.3); init();">^</a>
+<a href="javascript:gsouth(0.3); init();">v</a>
+</body>
+</html>
