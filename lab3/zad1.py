@@ -1,5 +1,6 @@
 #!/usr/bin/python2
 class dependency(object):
+	done_func=[]
 	def __init__(self,*args):
 		self.deps=[]
 		for func in args:
@@ -8,7 +9,9 @@ class dependency(object):
 		self.deps.append(f)
 		def function(*args):
 			for func in self.deps:
-				func(*args)
+				if func not in self.done_func:
+					func(*args)
+				self.done_func.append(func)
 		return function
 
 def g():
@@ -19,5 +22,5 @@ def f():
 @dependency(f,g)
 def h():
 	print 'funkcja h'
-
+print "funkcja h:"
 h()
