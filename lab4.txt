@@ -1,0 +1,6 @@
+1. wielordzeniowy reduce. Funkcja przyjmje argument funkcje, ktora ma do drugiego parametru wykorzystac te funkcje. srednia, odchylenie standardowe, maksimum, suma, mnozenie (pokazac)
+2. Na stronce dwa plik. Przeksztalcamy plik pap za pomoca slownika form. Formy maja byc zamienione na formy podstawowe. Nie robic replace.
+   Nastepnie wyliczyc wspolczynniki (prawo Zipfa)
+   Pokazac 5 wyrazow o najwiekszej metryc tf/df
+   (Search engine?)
+
