@@ -164,13 +164,16 @@ def truncate(tree):
 def mul_lists(tree):
 	out=[]
 	if tree[0]=='*' and len(tree)==3 and type(tree[1])==type(tree[2]) and type(tree[1])==type([]):
+		out.append('+')
 		for i in tree[1][1:]:
 			for j in tree[2][1:]:
 				out.append(['*',i,j])
 	elif tree[0]=='*' and len(tree)==3 and type(tree[1])==type([]):
+		out.append('+')
 		for i in tree[1][1:]:
 			out.append(['*',tree[2],i])
 	elif tree[0]=='*' and len(tree)==3 and type(tree[2])==type([]):
+		out.append('+')
 		for i in tree[2][1:]:
 			out.append(['*',tree[1],i])
 	else:
@@ -197,7 +200,6 @@ def crunch(tree):
 	tree=cat(tree)
 	tree=aggregate_test(tree)
 	tree=rem_minus(tree)
-	#tree=mul_lists(tree)
 	tree=expand(tree)
 	tree=reduce_similar(tree)
 	tree=truncate(tree)
