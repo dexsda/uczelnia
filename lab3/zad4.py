@@ -163,16 +163,16 @@ def truncate(tree):
 	return tree
 def mul_lists(tree):
 	out=[]
-	if tree[0]=='*' and len(tree)==3 and type(tree[1])==type(tree[2]) and type(tree[1])==type([]):
+	if tree[0]=='*' and len(tree)==3 and type(tree[1])==type(tree[2]) and type(tree[1])==type([]) and tree[1][0]=='+' and tree[2][0]=='+':
 		out.append('+')
 		for i in tree[1][1:]:
 			for j in tree[2][1:]:
 				out.append(['*',i,j])
-	elif tree[0]=='*' and len(tree)==3 and type(tree[1])==type([]):
+	elif tree[0]=='*' and len(tree)==3 and type(tree[1])==type([]) and tree[1][0]=='+':
 		out.append('+')
 		for i in tree[1][1:]:
 			out.append(['*',tree[2],i])
-	elif tree[0]=='*' and len(tree)==3 and type(tree[2])==type([]):
+	elif tree[0]=='*' and len(tree)==3 and type(tree[2])==type([]) and tree[2][0]=='+':
 		out.append('+')
 		for i in tree[2][1:]:
 			out.append(['*',tree[1],i])
@@ -183,6 +183,7 @@ def mul_lists(tree):
 				out.append(mul_lists(i))
 			else:
 				out.append(i)
+	out=aggregate_test(out)
 	return out
 def remove_useless_lists(tree):
 	out=[]
@@ -202,6 +203,7 @@ def crunch(tree):
 	tree=rem_minus(tree)
 	tree=expand(tree)
 	tree=reduce_similar(tree)
+	tree=mul_lists(tree)
 	tree=truncate(tree)
 	tree=remove_useless_lists(tree)
 	if copy==tree:
@@ -220,13 +222,22 @@ def print_out(tree):
 	elif tree[0]=='*':
 		for i in sorted(tree[1:]):
 			result+=print_out(i)
+	result = result.replace('+-1','-')
+	result = result.replace('+-','-')
+	result = result.replace('-1','-')
 	return result
-expr = sys.argv[1]
-print "expr:", expr
-tokens = tokenize(parse(expr))
-print "tokenized:", tokens
-tree = astree(tokens)
-print "tree:\n", print_tree(tree)
-tree=crunch(tree)
-print "tree after crunch:\n", print_tree(tree)
-print print_out(tree)
+
+if __name__=='__main__':
+	default='3a+b+aa+4*a*17*b+(a+b)*(a-b)-2a'
+	if len(sys.argv)<2:
+		expr=default
+	else:
+		expr = sys.argv[1]
+	print "expr:", expr
+	tokens = tokenize(parse(expr))
+	#print "tokenized:", tokens
+	tree = astree(tokens)
+	print "tree:\n", print_tree(tree)
+	tree=crunch(tree)
+	print "tree after crunch:\n", print_tree(tree)
+	print print_out(tree)
