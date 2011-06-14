@@ -1,0 +1,68 @@
+\documentclass{article}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\frenchspacing
+\usepackage{indentfirst}
+\usepackage{amsmath}
+\title{Sprawozdanie z numerycznych metod rozwiązywania cząstkowych równań rózniczkowych}
+\author{Karol Urbański}
+\begin{document}
+\maketitle
+\section{Podstawy teoretyczne}
+\subsection{Rozwiązywany problem}
+Rozwiązywany problem to zadanie 1 z laboratorium, w którym znajdujemy rozwiązanie \emph{równania Laplace'a} 
+w przestrzeni dwuwymiarowej $(x,y)\in [0,1]^2$:
+	\begin{equation}
+		\frac{\delta^2 V}{\delta x^2}
+			+
+		\frac{\delta^2 V}{\delta y^2}
+			=
+		0
+	\end{equation}
+z następującymi warunkami początkowymi:
+	\begin{equation*}
+		\forall x,y \in R: V(x,0)=V(x,1)=V(0,y)=V(1,y)=0,
+	\end{equation*}
+	\begin{equation*}
+		\forall (x,y) \in C: V(x,y)=l,
+	\end{equation*}
+gdzie $C$ to kwadratowy obszar przewodnika taki, że $C \in [0,1]^2$,
+a $l$ to dana stała oznaczająca potencjał przewodnika.
+\subsection{Dyskretyzacja problemu}
+Przestrzeń, w której rozwiązujemy równanie, musimy udyskretyzować, aby móc wykorzystać metody
+numeryczne do przybliżenia rozwiązania problemu. Dyskretyzacji dokonujemy poprzez podział przestrzeni
+na siatkę $(n-1)^2$ punktów $p_{ij} \in [0,1]^2$ takich, że $\forall (i,j) \in \{1,2,...,n-1\}\times \{1,2,...,n-1\}: p_{ij}=(ih,jh), h=\frac{1}{n}$.
+\newpage
+\begin{figure}[h]
+\begin{center}
+\setlength{\unitlength}{1cm}
+\begin{picture}(4,4)
+	\linethickness{0.075mm}
+	\multiput(0,0)(4,0){2}%
+		{\line(0,1){4}}
+	\multiput(0,0)(0,4){2}%
+		{\line(1,0){4}}
+	\put(1,1){\circle*{0.05}}
+	\put(1,2){\circle*{0.05}}
+	\put(1,3){\circle*{0.05}}
+	\put(2,3){\circle*{0.05}}
+	\put(3,3){\circle*{0.05}}
+	\put(3,2){\circle*{0.05}}
+	\put(3,1){\circle*{0.05}}
+	\put(2,1){\circle*{0.05}}
+	\put(2,2){\circle*{0.2}}
+
+\end{picture}
+\parbox{4in}{\emph{\caption{Przykładowa dyskretyzacja dla $n=4$, punkty oznaczone kropkami, punkty należące do przewodnika w centrum (pogrubiony); obwódka oznacza otaczający ekran}}}
+\end{center}
+\end{figure}
+
+Ponieważ do rozwiązania problemu będziemy
+wykorzystywać MRS\footnote{MRS - metoda różnic skończonych} dla równania stacjonarnego, dla
+ułatwienia obliczeń musimy zastosować dyskretyzację w taki sposób, by zmapować siatkę dwuwymiarową
+do  jednowymiarowej. Wykonujemy ją w najprostszy możliwy sposób: \[p_k=p_{ij} \iff k=i\cdot (n-1)+j \]
+czyli poprzez przypisanie kolejnych indeksów kolejnym elementom w kolejnych wierszach (idąc od góry 
+do dołu oraz od lewej do prawej). Przypisanie to jest bardzo proste, ale niezbędne jest zadbanie o
+ dokładne przygotowanie obliczeń, aby uniknąć błędów.
+\end{document}
