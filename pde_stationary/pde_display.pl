@@ -117,7 +117,7 @@ sub DrawGLScene {
 	glLoadIdentity;
 	glTranslatef(0.0,0.0,$campos->{eyedist});
 	glRotatef($campos->{angley},1,0,0);
-	glRotatef($campos->{anglex},0,1,0);
+	glRotatef($campos->{anglex},0,0,1);
 	my $step=2/($len+1);
 	for(my $i=1; $i<$len+2; $i++){
 		for(my $j=1; $j<$len+2; $j++){
@@ -203,6 +203,8 @@ sub keyPressed {
 		$wireframe=2;
 	} elsif ($key == 87 || $key == 77){
 		$wireframe=0;
+	} else {
+		saveImage("image.tga");
 	}
 	$rate=1 if $rate==0;
 	printf "key %d at %dx%d\n",$key,$x,$y if $debug;

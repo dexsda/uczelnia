@@ -8,6 +8,7 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{hyperref}
+\usepackage{graphicx}
 \hypersetup{colorlinks=true}
 \title{Sprawozdanie z numerycznych metod rozwiązywania cząstkowych równań rózniczkowych}
 \author{Karol Urbański}
@@ -148,7 +149,7 @@ Implementacja algorytmu znajduje się w warstwie implementacyjnej (rozdział \re
 \section{Warstwa implementacyjna}
 \subsection{Kernel obliczeniowy}
 \subsubsection{Wykonanie}
-Kernel obliczeniowy jest to program w C, przyjmujący na wejściu następujące argumenty: \\
+Kernel obliczeniowy jest to program w C, przyjmujący na wejściu następujące argumenty:
 \begin{enumerate}
    \item wartość początkowa $l$
    \item ilość punktów siatki wzdłuż jednego boku
@@ -228,4 +229,48 @@ ilość punktów na brzegu & $\overline{t}$ & $\sigma$ \\
 100 & 79.662s & 0.784s \\
 \hline
 \end{tabular}
+Złożoność obliczeniowa wydaje się znajdować na poziomie $O(n^4)$. Złożoność pamięciowa to $O(n^3)$.
+\subsection{Kilka rozwiązań}
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.4]{im1}
+\parbox{4in}{\emph{\caption{$n=50$, przewodnik o szerokości 10 punktów w środku.}}}
+\end{center}
+\end{figure}
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.4]{im1_wire}
+\parbox{4in}{\emph{\caption{$n=50$, przewodnik o szerokości 10 punktów w środku (wireframe).}}}
+\end{center}
+\end{figure}
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.4]{im1_point}
+\parbox{4in}{\emph{\caption{$n=50$, przewodnik o szerokości 10 punktów w środku (pointplot).}}}
+\end{center}
+\end{figure}
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.4]{im1_moved}
+\parbox{4in}{\emph{\caption{$n=50$, przewodnik o szerokości 10 punktów tuż koło ekranu.}}}
+\end{center}
+\end{figure}
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.4]{im1_moved_wire}
+\parbox{4in}{\emph{\caption{$n=50$, przewodnik o szerokości 10 punktów tuż koło ekranu (wireframe).}}}
+\end{center}
+\end{figure}
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.4]{im2}
+\parbox{4in}{\emph{\caption{$n=50$, przewodnik o szerokości 1 punktu w środku.}}}
+\end{center}
+\end{figure}
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.4]{im3}
+\parbox{4in}{\emph{\caption{$n=50$, przewodnik w środku, ujemny potencjał przewodnika.}}}
+\end{center}
+\end{figure}
 \end{document}
