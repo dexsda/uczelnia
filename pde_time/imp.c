@@ -43,7 +43,7 @@ float * gauss_seidel(float ** mat, float * x, float * vec, int size_sqr){
 	float prev;
 	float sum;
 	float maxerr=0.01;
-	while(maxerr>0.0000001 && k<size_sqr){
+	while(maxerr>0.00001 && k<size_sqr){
 		maxerr=0.0;
 		for(i=0; i<size_sqr; i++){
 			prev=x[i];
