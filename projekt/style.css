@@ -1,0 +1,33 @@
+body {background: #000; color: #c0c0c0; font-family: "Lucida Console", "monospace"; font-size: 11px; padding-right: 5px}
+#menu {position: absolute; left: 0;	top: 0; width: 200; border-right: 1px solid #f80; border-bottom: 1px dashed #f80}
+#main {position: absolute; left: 200; top: 0; min-width: 700; max-width: 950; border-left: 1px dashed #f80; border-right: 1px dashed #f80; border-bottom: 1px dashed #f80}
+li.name {color: #000; background: #f80; list-style: none; padding-left: 15px}
+li.item {color: #909090; list-style: none; padding-left: 23px}
+p.proc {text-align: right; font-size: 9px; color: #840; padding-bottom: 0px; padding-right: 0px; margin-bottom: 0px; margin-right: 0px}
+.justify {text-align: justify}
+.center {text-align: center}
+p {margin-left: 6px; margin-right: 6px}
+div.newsitem {padding: none; margin: none; margin-left: 6px; margin-right: 6px; text-align: justify}
+h4 {font-weight: bold; font-size: 11px; color: #f80}
+/*span.code {font-size: 11px; color: #f80}
+*/span.sig{font-weight: bold; color: #080}
+span.small {font-size: 7px}
+span.orange {color: #f80}
+h3 {color: #a50; font-size: 10px}
+span.wallcat {color:#060; font-size: 10px}
+h2 {text-align: left; padding-left: 3px; font-size: 13px; color: #f00; padding-top: 10px}
+.hidden {display: none;}
+.unhidden {display: block;}
+.progtable {border-top: 1px dashed #0f0; border-bottom: 1px dashed #0f0; color: #f80; font-size: 10px; text-align: left}
+.code {border-top: 1px dashed #088; border-bottom: 1px dashed #088; color: #f80; font-size:11px}
+div.wprep {position: relative; border-bottom: 1px dashed #00f; font-size:11px; width:700}
+div.wpinfo {position: absolute; right: 5; top: 5; text-align: right}
+a.ml:link {color: #c0c0c0; text-decoration: none}
+a.ml:visited {color: #c0c0c0; text-decoration: none}
+a.ml:hover {color: #f80; text-decoration: underline}
+a.ml:active {color: #f00; text-decoration: underline}
+img.lin {padding-right: 2px; vertical-align: middle; border: none}
+a:link {color: #f80}
+a:visited {color: #f80; font-style: italic}
+a:hover {color: #f00; font-style: italic}
+a:active {color: #0f0}

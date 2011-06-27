@@ -15,7 +15,7 @@
 
 int sock;
 FILE * logfile;
-int ps,users,mem,loadavg;
+int ps,users,mem,loadavg,threads;
 
 void sigint_handler(int signo){
 	close(sock);
@@ -40,6 +40,7 @@ void * conn_thread(void * data){
 			users=conf(pckt.message,"users");
 			mem=conf(pckt.message,"mem");
 			loadavg=conf(pckt.message,"load");
+			threads=conf(pckt.message,"threads");
 			fprintf(logfile,"%s\n",pckt.message);
 		} else if(!strncmp(pckt.message,"info",4)) {
 			pckt.message[0]='\0';
@@ -71,6 +72,13 @@ void * conn_thread(void * data){
 				pclose(p);
 				sprintf(pckt.message,"%s | mem: total[%dB]/free[%dB]",pckt.message,temp1,temp2);
 			}
+			if(threads){
+				int temp;
+				FILE * p = popen("ps -eLf | wc -l", "r");
+				fscanf(p,"%d",&(temp));
+				pclose(p);
+				sprintf(pckt.message,"%s | threads: %d",pckt.message,temp);
+			}
 			fprintf(logfile,"%s\n",pckt.message);
 			send(sock,&pckt,sizeof(struct packet),0);
 		}
@@ -79,8 +87,15 @@ void * conn_thread(void * data){
 	}
 }
 
-int main(void) {
+int main(int argc, char * argv[]) {
 	/* przyzywamy demona */
+	int port=2048;
+	if(argc==2)
+		port=atoi(argv[1]);
+	if(port<=2000){
+		fprintf(stderr,"port too low");
+		exit(EXIT_FAILURE);
+	}
 	pid_t pid, sid;
 	pid = fork();
 	if (pid < 0) {
@@ -110,7 +125,7 @@ int main(void) {
 	}
 	struct sockaddr_in * addr=calloc(1,sizeof(struct sockaddr_in));
 	addr->sin_family = AF_INET;
-	addr->sin_port = htons(2049);
+	addr->sin_port = htons(port);
 	addr->sin_addr.s_addr = htonl(INADDR_ANY);
 	if(bind(sock,(struct sockaddr *)addr,sizeof(struct sockaddr_in))==-1){
 		fprintf(logfile,"socket bind error\n");

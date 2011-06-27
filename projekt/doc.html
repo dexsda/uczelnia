@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css">
+<title>Systemy operacyjne - projekt</title>
+</head>
+
+
+<body>
+<h2>1. Ogólna koncepcja</h2>
+<p>
+System składa się z programów-daemonów uruchomionych na wielu komputerach oraz z programów-klientów, które pobierają zadane informacje oraz konfigurują demony, z którymi są połączone.
+System powinien być łatwy w użyciu oraz bezawaryjny.
+</p>
+<h2>2. Stosowane mechanizmy </h2>
+
+<p>W projekcie stosowane są następujące mechanizmy:
+<ul>
+	<li><span class='sig'>sockety streamowe, internetowe</span> - używane do komunikacji pomiędzy daemonami i klientami. Wykorzystywane są sockety streamowe, gdyż dają gwarancję dostarczenia informacji. Wykorzystywane są wyłącznie sockety internetowe, gdyż z komputerem lokalnym bezproblemowo można połączyć się poprzez loopback.</li>
+	<li><span class='sig'>wątki pthread</span> - używane do obsługi osobnych połączeń zarówno w daemonach, jak i kliencie. Wybrane zamiast forkowania, gdyż znacznie ułatwiają wykonanie programu.</li>
+	<li><span class='sig'>pipe (popen)</span> - do otwierania procesów zewnętrznych systemu, aby otrzymać odpowiednie informację. Użyte, gdyż pozwalają na przenośność także na platformy, gdzie standard POSIX nie jest w pełni utrzymany (gdyż polecenia takie jak ps, wc itd. działają i na takich systemach)</li>
+</ul>
+
+<h2>3. Opis procesów</h2>
+<h3>3.1. Daemon</h3>
+Wykorzystywany jest standardowy mechanizm forkowania, uzyskiwania session id, zamykania deskryptorów, logowania do pliku oraz ustawiania maski. Daemon nie jest niczyim potomkiem; tworzy osobne wątki dla obsługiwanych połączeń. Komunikuje się z dowolną ilością klientów na raz poprzez użycie socketów. Nie łączy się z innymi daemonami.
+<h3>3.2. Klient</h3>
+Nie jest niczyim potomkiem; przy rozpoczęciu komunikacji tworzy osobne wątki dla obsługiwanych połączeń. Komunikuje się z dowolną ilością daemonów na raz poprzez sockety. Nie łączy się z innymi klientami.
+<h2>4. Opis użycia</h2>
+<h3>4.1. Instalacja</h3>
+<p>
+Zwykła kompilacja i uruchomienie odpowiedniego programu.
+</p>
+<h3>4.2. Obsługa daemona</h3>
+<p>
+Uruchamiamy binarkę daemona, opcjonalnie z argumentem numerycznym będącym numerem portu, na którym nasłuchiwać powinien daemon. Dla uniknięcia cichych błędów w utworzeniu i zbindowaniu socketu, dopuszczalne są tylko porty powyżej 2000. Domyślnym portem jest okrągłe 2048.
+</p><p>
+Sam daemon nie pozwala na dalszą konfigurację, musimy jej dokonać poprzez podłączenie i użycie klienta.
+</p>
+<h3>4.3. Obsługa klienta</h3>
+<p>
+Klient nie przyjmuje żadnego argumentu.
+</p><p>
+W pierwszej kolejności, po ukazaniu się shella klienta, powinniśmy połączyć się z daemonami, od których chcemy pobierać informacje, poprzez użycie polecenia
+<div class="code">
+	connect [ip] [port]
+</div>
+<p>gdzie ip to adres, a port to numer portu, na którym powinien nasłuchiwać daemon.<br \>
+Obydwa elementy adresu można także oddzielić dwukropkiem.<br \>
+Daemonowi zostaje przypisany pierwszy w kolejności wolny indeks w tablicy daemonów klienta.</p>
+<p>By zobaczyć listę daemonów, ich adresów, oraz ich indeksy, można użyć polecenia
+<div class="code">
+	list
+</div><p>
+które wyświetli połączone daemony.
+</p>
+<p>Jeżeli chcemy zakończyć połączenie, wykorzystujemy polecenie</p>
+
+<div class="code">
+	disconnect [indeks]
+</div><p>
+gdzie [indeks] to indeks wyświetlany przez polecenie list. (Można użyć * by zakończyć wszelkie aktywne połączenia)</p>
+<p>By skonfigurować daemona</p>
+
+<div class="code">
+	configure [indeks] [optlist]
+</div><p>
+gdzie [indeks] to indeks wyświetlany przez polecenie list, a [optlist] to lista oddzielonych dowolnymi znakami kombinacji następujących elementów:</p>
+<div class="code">
+	ps - informacje o procesach<br />
+	load - loadavg <br />
+	mem - informacje o pamięci <br />
+	users - ilość userów <br />
+	threads - ilość wątków <br />
+</div><p>
+Jeżeli jakiegoś elementu nie ma na liście, jego wyświetlanie jest dla danego daemona wyłączane. Jeżeli jest, jest ono włączone.</p>
+<p>
+Wreszcie, by zacząć uzyskiwanie informacji w dowolnym odstępie czasu, wykorzystujemy:
+</p>
+<div class="code">
+	start [time]
+</div><p>
+gdzie time jest opcjonalnym argumentem definiującym, co ile sekund daemon ma być odpytywany. Domyślną wartością jest 10.
+<h2>Wykorzystywane źródła</h2>
+<ul>
+<li>W. Richard Stevens, "Programowanie w środowisku systemu UNIX"</li>
+<li>Mark Mitchell, Jeffrey Oldham, Alex Samuel, "Linux. Programowanie dla zaawansowanych"</li>
+</body>
+</html>
