@@ -17,10 +17,8 @@ class CounterSemaphore {
 	public void podnies() {
 		mutex.opusc();
 		value++;
-		if(value<=0) {
+		if(value<=0) 
 			delay.podnies();
-		} else {
-			mutex.podnies();
-		}
+		mutex.podnies();
 	}
 }

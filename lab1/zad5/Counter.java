@@ -2,7 +2,7 @@ import java.util.concurrent.locks.*;
 
 class Counter {
 	//private IfBinarySemaphore sem = new IfBinarySemaphore();
-	private BinarySemaphore sem = new BinarySemaphore();
+	private CounterSemaphore sem = new CounterSemaphore(1);
 	private int c = 0;
 	public void inc() {
 		sem.opusc();

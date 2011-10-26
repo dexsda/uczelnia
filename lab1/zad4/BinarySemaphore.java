@@ -2,9 +2,7 @@ class BinarySemaphore {
 	private boolean value = true;
 	public synchronized void podnies() {
 		this.value = true;
-		if(this.value) {
-			notify();
-		}
+		notify();
 	}
 	public synchronized void opusc() {
 		while(!this.value){

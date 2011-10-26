@@ -6,7 +6,7 @@ class CounterThread extends Thread {
 		this.increment = inc;
 	}
 	public void run(){
-		for(int i=0; i<100000000; i++){
+		for(int i=0; i<1000000; i++){
 			if(increment){
 				CounterObject.inc();
 			} else {
