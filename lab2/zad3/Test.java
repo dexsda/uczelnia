@@ -15,17 +15,21 @@ public class Test {
 	public static void main(String args[]) {
 		Test pc = new Test();
 		for(int j=0; j<3; j++) {
-			Producer producer = pc.new Producer();
+			Producer producer = pc.new Producer(j);
 			producer.start();
 		}
 		for(int j=0; j<2; j++) {
-			Consumer consumer = pc.new Consumer();
+			Consumer consumer = pc.new Consumer(j);
 			consumer.start();
 		}
 	}
 
 	class Producer extends Thread {
 		Random gen = new Random();
+		int index;
+		Producer(int ind){
+			this.index=ind;
+		}
 		public void run() {
 			while(true){
 				int temp = gen.nextInt(N);
@@ -35,7 +39,7 @@ public class Test {
 					while((2*N-filled)<temp)
 						first_producer.acquire();
 				} catch (InterruptedException e) {}
-					System.out.println(pos_prod+" --> "+temp);
+					System.out.println(pos_prod+" -"+index+"> "+temp);
 					filled+=temp;
 					for(;temp!=0; temp--){
 						buffer[pos_prod]=1;
@@ -51,6 +55,10 @@ public class Test {
 	}
 	class Consumer extends Thread {
 		Random gen = new Random();
+		int index;
+		Consumer(int ind){
+			this.index=ind;
+		}
 		public void run() {
 			while(true){
 				int temp = gen.nextInt(N);
@@ -60,7 +68,7 @@ public class Test {
 					while(filled<temp)
 						first_consumer.acquire();
 				} catch (InterruptedException e) {}
-					System.out.println(pos_cons+" <-- "+temp);
+					System.out.println(pos_cons+" <"+index+"- "+temp);
 					filled-=temp;
 					for(;temp!=0; temp--){
 						buffer[pos_cons]=0;
