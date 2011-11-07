@@ -15,23 +15,25 @@ let rec eval expr = match expr with
         | Mult (a,b) -> (eval a)*.(eval b)
         | Div (a,b) -> (eval a)/.(eval b)
         | Minus a -> -.(eval a)
-
-let rec simplify_expr expr = match expr with
+let rec simplify expr = match expr with
         | Int a -> Float (float a)
         | Float a -> Float a
-        | Minus a -> if (simplify_expr a)=Float 0. then
-                Float 0. else Minus (simplify_expr a)
-        | Div (a,b) -> if(simplify_expr b)=Float 1. then
-                simplify_expr a else Div (simplify_expr a, simplify_expr b)
-        | Add (a,b) -> if (simplify_expr a)=Float 0. then 
-                simplify_expr b else if (simplify_expr b)=Float 0. then
-                simplify_expr a else Add (simplify_expr a,simplify_expr b)
-        | Sub (a,b) -> if (simplify_expr a)=Float 0. then 
-                Minus (simplify_expr b) else if (simplify_expr b)=Float 0. then
-                simplify_expr a else Sub (simplify_expr a,simplify_expr b)
-        | Mult (a,b) -> if(simplify_expr a)=Float 1. then
-                simplify_expr b else if (simplify_expr b)=Float 1. then
-                simplify_expr a else Mult (simplify_expr a, simplify_expr b)
+        | Minus a -> if (simplify a)=Float 0. then
+                Float 0. else Minus (simplify a)
+        | Div (a,b) -> if(simplify b)=Float 1. then
+                simplify a else Div (simplify a, simplify b)
+        | Add (a,b) -> if (simplify a)=Float 0. then 
+                simplify b else if (simplify b)=Float 0. then
+                simplify a else Add (simplify a,simplify b)
+        | Sub (a,b) -> if (simplify a)=Float 0. then 
+                Minus (simplify b) else if (simplify b)=Float 0. then
+                simplify a else Sub (simplify a,simplify b)
+        | Mult (a,b) -> if(simplify a)=Float 1. then
+                simplify b else if (simplify b)=Float 1. then
+                simplify a else Mult (simplify a, simplify b)
+
+let rec simplify_expr expr= 
+        let expr2 = simplify expr in if expr2 <> expr then simplify_expr expr2 else expr2
 
 let print_expr expr =
         let openpar prec op_prec =
