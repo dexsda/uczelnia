@@ -3,46 +3,42 @@ import java.util.Random;
 
 class Kelner {
 	private final int N;
-	private ReentrantLock lock = new ReentrantLock();
-	private Condition[] cond;
-	private Condition con = lock.newCondition();
-	private ReentrantLock[] locks;
-	private int[] count;
-	private boolean free = true;
-	private Random gener = new Random();
+	private Object[] mon;
+	private boolean[] free;
+	private Object table = new Object();
+	private int table_people = 0;
 	public Kelner(int n) {
 		this.N = n;
-		this.locks = new ReentrantLock[n];
-		this.cond = new Condition[n];
-		this.count = new int[n];
+		this.mon = new Object[n];
+		this.free = new boolean[n];
 		for(int i=0; i<n; i++){
-			this.locks[i]=new ReentrantLock();
-			this.cond[i]=this.locks[i].newCondition();
-			this.count[i]=0;
+			this.mon[i]=new Object();
+			this.free[i]=false;
 		}
 	}
-	public void reserve(int i){
-		locks[i].lock();
-		count[i]++;
-		try{
-			lock.lock();
-			while(count[i]==2 && !free){
-				con.await();
+	public void reserve(int i) throws InterruptedException{
+		synchronized(mon[i]) {
+			if(!free[i]){
+				free[i] = !free[i];
+				mon[i].wait();
+			} else {
+				synchronized(table){
+					while(table_people > 0){
+						table.wait();
+					}
+					table_people=2;
+					mon[i].notifyAll();
+				}
 			}
-			lock.unlock();
-		} catch (InterruptedException e){}
-		if(count[i]==2){
-			cond[i].signal();
 		}
-		try {
-			while(count[i] != 2)
-				cond[i].await();
-		} catch (InterruptedException e) {}
-		locks[i].unlock();
 	}
-	public void free(){
-		lock.lock();
-		con.signal();
-		lock.unlock();
+	public void free(int i){
+		synchronized(table){
+			table_people--;
+			if(table_people==0){
+				table.notifyAll();
+				free[i]=false;
+			}
+		}
 	}
 }

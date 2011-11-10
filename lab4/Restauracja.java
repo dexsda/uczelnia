@@ -5,16 +5,18 @@ public class Restauracja {
 	public static void main(String[] args){
 		Restauracja tt = new Restauracja();
 		Kelner mon = new Kelner(Integer.parseInt(args[0]));
-		for(int i=0; i<Integer.parseInt(args[0])*2; i++){
+		for(int i=0; i<Integer.parseInt(args[0]); i++){
 			PrintThread thread = tt.new PrintThread(i,mon);
+			thread.start();
+			thread = tt.new PrintThread(i,mon);
 			thread.start();
 		}
 	}
 	public void print(int index){
 		int j = gen.nextInt(5)+1;
-		System.out.println("omnom" + index);
+		System.out.println(index + " -> omnom przez "+j+" sek");
 		try {
-			Thread.sleep(j*100);
+			Thread.sleep(j*10);
 		} catch(InterruptedException e) {}
 	}
 	class PrintThread extends Thread {
@@ -27,11 +29,11 @@ public class Restauracja {
 		public void run(){
 			for(;;){
 				try {
-					Thread.sleep(1000);//tworzenie zadania do druku
+					Thread.sleep(gen.nextInt(5)*1000);//tworzenie zadania do druku
+					kelner.reserve(index);
 				} catch(InterruptedException e) {}
-				kelner.reserve(index/2);
 				print(index);
-				kelner.free();
+				kelner.free(index);
 			}
 		}
 	}
