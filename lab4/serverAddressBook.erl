@@ -1,7 +1,7 @@
 -module(serverAddressBook).
 
 -behaviour(gen_server).
--export([addContact/2, addEmail/3, addPhone/3, removeContact/2, removeEmail/3, removePhone/3, getEmails/2, getPhones/2, findByEmail/1, findByPhone/1]).
+-export([addContact/2, addEmail/3, addPhone/3, removeContact/2, removeEmail/3, removePhone/3, getEmails/2, getPhones/2, findByEmail/1, findByPhone/1, prettyPrintAll/0]).
 -export([start_link/0, stop/0]).
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3]).
 
@@ -32,6 +32,8 @@ findByEmail(Email)->
 	gen_server:call(?MODULE, {findByEmail, Email}).
 findByPhone(Phone)->
 	gen_server:call(?MODULE, {findByPhone, Phone}).
+prettyPrintAll()->
+	gen_server:call(?MODULE, {prettyPrintAll}).
 stop()->
 	gen_server:cast(?MODULE, stop).
 
@@ -63,7 +65,7 @@ init(AB)->
 %% --------------------------------------------------------------------
 
 handle_call({addContact, Name, Surname}, From, AB) ->
-    Reply = addressBook:addContact(Name, Surname, AB),
+	Reply = addressBook:addContact(Name, Surname, AB),
 	choose_reply(Reply, AB);
 handle_call({addEmail, Name, Surname, Email}, From, AB) ->
 	Reply = addressBook:addEmail(Name, Surname, Email, AB),
@@ -92,8 +94,8 @@ handle_call({findByEmail, Email}, From, AB) ->
 handle_call({findByPhone, Phone}, From, AB) ->
 	Reply = addressBook:findByPhone(Phone, AB),
 	{reply, Reply, AB};
-handle_call({sort, Type}, From, AB) ->
-	Reply = addressBook:sort(Type, AB),
+handle_call({prettyPrintAll}, From, AB) ->
+	Reply = addressBook:prettyPrintAll(AB),
 	{reply, Reply, Reply}.
 
 

@@ -1,6 +1,6 @@
 -module(rAddressBook).
 
--export([addContact/2, addEmail/3, addPhone/3, removeContact/2, removeEmail/3, removePhone/3, getEmails/2, getPhones/2, findByEmail/1, findByPhone/1, start/0, stop/0]).
+-export([addContact/2, addEmail/3, addPhone/3, removeContact/2, removeEmail/3, removePhone/3, getEmails/2, getPhones/2, findByEmail/1, findByPhone/1, prettyPrintAll/0, start/0, stop/0]).
 -export([init/1]).
 
 init(AB)->
@@ -40,16 +40,11 @@ init(AB)->
 			init(AB);
 		{findByPhone, Pid, Phone} ->
 			Pid ! addressBook:findByPhone(Phone, AB),
+			init(AB);
+		{prettyPrintAll, Pid} ->
+			Str = addressBook:prettyPrintAll(AB),
+			Pid ! Str,
 			init(AB)
-	%	{prettyPrintAll, Pid, Type} ->
-	%		NewAB = addressBook:sort(Type, AB),
-	%		Pid ! NewAB,
-	%		if
-	%			is_list(NewAB)->
-	%				init(NewAB);
-	%			true ->
-	%				init(AB)
-	%		end
 	end.
 
 %%
@@ -139,6 +134,15 @@ findByEmail(Email)->
 
 findByPhone(Phone)->
 	addressBookServer ! {findByPhone, self(), Phone},
+	receive
+		ReturnMessage ->
+			ReturnMessage
+	after 5000 ->
+			{didNotReceiveReply}
+	end.
+
+prettyPrintAll()->
+	addressBookServer ! {prettyPrintAll, self()},
 	receive
 		ReturnMessage ->
 			ReturnMessage

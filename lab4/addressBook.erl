@@ -60,8 +60,8 @@ findByPhone(Phone,[{Name,_,Phones} | T])->
 		true -> findByPhone(Phone,T)
 	end.
 
-prettyPrintAll([])->ok;
-prettyPrintAll([{{Name,Surname},Emails,Phones} | T])->printEntry(Name,Surname,Emails,Phones),prettyPrintAll(T).
+prettyPrintAll([])->"";
+prettyPrintAll([{{Name,Surname},Emails,Phones} | T])->lists:flatten(string:concat(printEntry(Name,Surname,Emails,Phones),prettyPrintAll(T))).
 
 prettyPrint(Name,Surname,Book)->prettyPrint({Name,Surname},Book).
 
@@ -100,15 +100,15 @@ containsName(Entry,[{Entry,_,_} | _])-> true;
 containsName(Entry,[_ | T])-> containsName(Entry,T).
 
 printEntry(Name,Surname,Emails,Phones)->
-	io:fwrite("~s ~s:",[Name,Surname]),
-	io:fwrite("~n~c Emails: ",[9]),
-	printList(Emails),
-	io:fwrite("~n~c Phones: ",[9]),
-	printList(Phones),
-	io:fwrite("~n",[]).
+	string:concat(io_lib:format("~s ~s:",[Name,Surname]),
+		string:concat(io_lib:format("~n~c Emails: ",[9]),
+			string:concat(printList(Emails),
+				string:concat(io_lib:format("~n~c Phones: ",[9]),
+					string:concat(printList(Phones),
+						io_lib:format("~n",[])))))).
 
-printList([])->ok;
-printList([H | T])->io:fwrite("~s; ",[H]),printList(T).
+printList([])->"";
+printList([H | T])->string:concat(io_lib:format("~s; ",[H]),printList(T)).
 
 contains([],_) -> false;
 contains([H | _],H) -> true;
