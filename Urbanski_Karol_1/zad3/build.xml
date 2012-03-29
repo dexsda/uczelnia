@@ -1,0 +1,33 @@
+<project default="main">
+
+	<target name="clean">
+		<delete dir="build"/>
+	</target>
+
+	<target name="compile">
+		<mkdir dir="build/classes"/>
+		<javac srcdir="src" destdir="build/classes"/>
+	</target>
+
+	<target name="jar">
+		<mkdir dir="build/jar"/>
+		<jar destfile="build/jar/Client.jar" basedir="build/classes">
+			<manifest>
+				<attribute name="Main-Class" value="Client"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run">
+		<java jar="build/jar/Client.jar" fork="true">
+			<arg value="${arg0}"/>
+			<arg value="${arg1}"/>
+			<arg value="${arg2}"/>
+		</java>
+	</target>
+
+	<target name="main" depends="compile">
+		<echo message="compiling..."/>
+	</target>
+
+</project>
